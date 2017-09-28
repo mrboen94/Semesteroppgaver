@@ -1,37 +1,53 @@
+
 public class pirate{
   public static void main(String[] args) {
-    double iterations = 100000.00;
-    double stepsAmount = 0;
+    int iterations = 100000;
+    double steps = 0;
+    /* iterations is number of times we are running the simulation in the for loop below.
+     * steps is a double to get a more accurate result when doing the final division, this way we dont have to use "printf".
+     * for loop is calling to the int iterations to decide how many runs we are simulating,
+     * this can be modified later to make the program run
+     * any amount of iterations.
+     */
     for (int i = 0; i < iterations; i++) {
-      int xCoordinate = 5;
-      int yCoordinate = 5;
-      while (xCoordinate > 0 && xCoordinate <= 10 && yCoordinate > 0 && yCoordinate <= 10) {
-        int direction = (int) (Math.random() * 5);
-        switch (direction) {
-          case 1:  direction = 0;
-          stepsAmount++;
-          xCoordinate ++;
-          break;
-          case 2:  direction = 1;
-          stepsAmount++;
-          xCoordinate --;
-          break;
-          case 3:  direction = 2;
-          stepsAmount++;
-          yCoordinate ++;
-          break;
-          case 4:  direction = 3;
-          stepsAmount++;
-          yCoordinate --;
-          break;
-        }
+      steps += simulate();
+    }
+    // system.out.println(); is doing the final division as well as printing the text
+    // that way we dont have to add another variable to do it for us.
+    System.out.println("Jack was eaten by shark after " + steps/iterations + " steps (averaged over " + iterations + " runs).");
+  }
+  
+  // new method doing the simulation of steps before Jack gets eaten by sharks.
+  
+  public static int simulate() {
+    int stepsAmount = 0;  // number of steps in one lifecycle
+    int xCoordinate = 5;  // x coordinates, gets reset every lifecycle.
+    int yCoordinate = 5;  // y coordinates, gets reset every lifecycle.
+    
+  // The while statement below makes sure that we know when Jack hits the water.
+    
+    while (xCoordinate > 0 && xCoordinate <= 10 && yCoordinate > 0 && yCoordinate <= 10) {
+      int direction = (int) (Math.random() * 5); // variable placed here to make sure Jack goes a random direction for each step
+      switch (direction) {  // switch instead of if statement because it is easier to read
+        case 1:  direction = 0;
+        stepsAmount++;  // +1 to steps
+        xCoordinate ++; // Jack moves one step to the right
+        break;
+        case 2:  direction = 1;
+        stepsAmount++;
+        xCoordinate --; // Jack moves one step to the left
+        break;
+        case 3:  direction = 2;
+        stepsAmount++;
+        yCoordinate ++; // Jack moves one step up
+        break;
+        case 4:  direction = 3;
+        stepsAmount++;
+        yCoordinate --; // Jack moves one step down
+        break;
       }
     }
-    System.out.println("Jack took " + stepsAmount/iterations + " steps");
+    return stepsAmount; // returning the amount of steps used in this lifecycle.
   }
 }
-
-
-
-
 
